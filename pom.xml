@@ -7,10 +7,7 @@
     <groupId>com.sandersgutierrez.javareflectionapi</groupId>
     <artifactId>trying-java-reflection-api</artifactId>
     <version>1.0-SNAPSHOT</version>
-
-    <name>trying-java-reflection-api</name>
-    <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
+    <name>example-java-reflection-api</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
