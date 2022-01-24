@@ -3,6 +3,8 @@ package com.sandersgutierrez.javareflectionapi;
 import com.sandersgutierrez.javareflectionapi.model.Computer;
 import com.sandersgutierrez.javareflectionapi.model.Washer;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,26 +16,29 @@ public class App {
         computerList.add(computerOne);
         computerList.add(computerTwo);
 
-        for (Computer computer : computerList) {
-            System.out.println("ID: " + computer.getId());
-            System.out.println("Power: " + computer.getPower());
-            System.out.println("Description: " + computer.getDescription());
-            System.out.println("---------------------------------------");
-        }
-
-        System.out.println("\n|==================================|\n");
-
         List<Washer> washerList = new ArrayList<>();
         Washer washerOne = new Washer(1L, "LG-480", "The Washer's home");
         Washer washerTwo = new Washer(2L, "Samsung-T50", "The Washer of my Mom");
         washerList.add(washerOne);
         washerList.add(washerTwo);
 
-        for (Washer washer : washerList) {
-            System.out.println("ID: " + washer.getId());
-            System.out.println("Model: " + washer.getModel());
-            System.out.println("Description: " + washer.getDescription());
-            System.out.println("---------------------------------------");
+        printAnyProductList(computerList);
+        System.out.println("|==================================|");
+        printAnyProductList(washerList);
+    }
+
+    public static void printAnyProductList(List<?> list) {
+        for (Object l : list) {
+            Method[] methods = l.getClass().getDeclaredMethods();
+            for (Method m : methods) {
+                if (m.getName().equals("getId") || m.getName().equals("getDescription")) {
+                    try {
+                        System.out.println(m.invoke(l));
+                    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
     }
 }
