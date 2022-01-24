@@ -22,23 +22,27 @@ public class App {
         washerList.add(washerOne);
         washerList.add(washerTwo);
 
+        System.out.println("|=====================================================================|");
         printAnyProductList(computerList);
-        System.out.println("|==================================|");
+        System.out.println("|---------------------------------------------------------------------|");
         printAnyProductList(washerList);
+        System.out.println("|=====================================================================|");
     }
 
     public static void printAnyProductList(List<?> list) {
+        StringBuilder stringBuilder = new StringBuilder();
         for (Object l : list) {
             Method[] methods = l.getClass().getDeclaredMethods();
             for (Method m : methods) {
                 if (m.getName().equals("getId") || m.getName().equals("getDescription")) {
                     try {
-                        System.out.println(m.invoke(l));
+                        stringBuilder.append(m.invoke(l)).append("\t | ");
                     } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                         e.printStackTrace();
                     }
                 }
             }
         }
+        System.out.println(" --> " + stringBuilder.toString());
     }
 }
